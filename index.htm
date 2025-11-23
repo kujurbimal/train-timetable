@@ -1,310 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>World Train Timetable</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f4f7fa;
-            color: #222;
-        }
-        header {
-            background: #1a73e8;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 900px;
-            margin: 24px auto;
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        }
-        h2 { text-align: center; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Train Timetable</title>
 
-        label{display:block;margin-top:12px;font-weight:600}
-        input, select, button {
-            width: 100%;
-            padding: 10px 12px;
-            margin-top:8px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            box-sizing: border-box;
-        }
-        .row{display:flex;gap:12px}
-        .row .col{flex:1}
-        button {
-            background: #1a73e8;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover { background:#155fc4 }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f8f8f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      background: #fff;
+      padding: 25px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    select, input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #0056b3; }
 
-        #results {
-            margin-top: 20px;
-            padding: 18px;
-            background: #eef3fb;
-            border-radius: 10px;
-            display: none;
-        }
-
-        table{width:100%;border-collapse:collapse;margin-top:10px}
-        th,td{padding:8px;text-align:left;border-bottom:1px solid #e6eef9}
-
-        /* Mobile */
-        @media(max-width:700px){
-            .row{flex-direction:column}
-        }
-    </style>
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e7f3ff;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <h1>World Train Timetable</h1>
-        <p>Find real-time train schedules for many countries (India, EU, USA, Japan, UK, Australia)</p>
-    </header>
+  <div class="container">
+    <h2>🌍 World Train Timetable</h2>
 
-    <div class="container">
-        <h2>Search Train Timings</h2>
+    <!-- Country Selection -->
+    <label>Select Country</label>
+    <select id="country">
+      <option value="">Select Country</option>
+      <option value="IN">🇮🇳 India</option>
+      <option value="US">🇺🇸 USA</option>
+      <option value="UK">🇬🇧 United Kingdom</option>
+      <option value="JP">🇯🇵 Japan</option>
+      <option value="EU">🇪🇺 Europe</option>
+      <option value="CA">🇨🇦 Canada</option>
+      <option value="AU">🇦🇺 Australia</option>
+    </select>
 
-        <label for="country">Select Country</label>
-        <select id="country">
-            <option value="">-- Choose Country --</option>
-            <option value="India">🇮🇳 India</option>
-            <option value="USA">🇺🇸 United States (Amtrak)</option>
-            <option value="Germany">🇩🇪 Germany (Deutsche Bahn)</option>
-            <option value="Japan">🇯🇵 Japan (JR)</option>
-            <option value="UK">🇬🇧 United Kingdom (National Rail)</option>
-            <option value="Australia">🇦🇺 Australia (Transport NSW)</option>
-            <option value="France">🇫🇷 France (SNCF)</option>
-            <option value="Canada">🇨🇦 Canada (VIA Rail)</option>
-            <!-- more countries can be added -->
-        </select>
+    <!-- Date -->
+    <label>Select Date</label>
+    <input type="date" id="date">
 
-        <div class="row" style="align-items:center;">
-            <div class="col">
-                <label for="from">From (station name or code)</label>
-                <input id="from" placeholder="e.g. NDLS or New Delhi" />
-            </div>
+    <!-- From / To -->
+    <label>From Station</label>
+    <input type="text" id="from" placeholder="Enter departure station">
 
-            <div style="display:flex;align-items:center;justify-content:center;width:56px">
-                <button id="swapBtn" title="Swap from/to" style="width:44px;height:44px;border-radius:8px;border:1px solid #ccc;background:#fff;cursor:pointer;font-size:18px">↕</button>
-            </div>
+    <label>To Station</label>
+    <input type="text" id="to" placeholder="Enter arrival station">
 
-            <div class="col">
-                <label for="to">To (station name or code)</label>
-                <input id="to" placeholder="e.g. BCT or Mumbai Central" />
-            </div>
-        </div>
+    <button onclick="searchTrain()">Search Timetable</button>
 
-        <label for="datepicker">Select Date</label></label>
-        <input type="date" id="datepicker" />
+    <!-- Results -->
+    <div class="result-box" id="result"></div>
+  </div>
 
-        <label for="indiaApiKey">India API Key (optional)</label>
-        <input type="text" id="indiaApiKey" placeholder="RailwayAPI / IRCTC key (optional)" />
+  <script>
+    function searchTrain() {
+      const country = document.getElementById('country').value;
+      const date = document.getElementById('date').value;
+      const from = document.getElementById('from').value.trim();
+      const to = document.getElementById('to').value.trim();
+      const result = document.getElementById('result');
 
-        <button id="searchBtn">Search</button>
+      if (!country || !date || !from || !to) {
+        result.style.display = 'block';
+        result.innerHTML = "⚠️ Please fill all fields.";
+        return;
+      }
 
-        <div id="results"></div>
-    </div>
+      result.style.display = "block";
+      result.innerHTML = `⏳ Fetching live train data for <b>${country}</b>...`;
 
-    <script>
-        // --- Station Autocomplete Data Loader ---
-        async function fetchStations(country, query){
-            if(!country || !query) return [];
-            try{
-                const resp = await fetch(`http://localhost:8000/api/stations/search?country=${encodeURIComponent(country)}&q=${encodeURIComponent(query)}`);
-                if(!resp.ok) return [];
-                const data = await resp.json();
-                return Array.isArray(data.stations) ? data.stations : [];
-            }catch(e){ return []; }
-        }
+      // Placeholder — integrate real API later
+      setTimeout(() => {
+        result.innerHTML = `
+          <b>Train Timetable</b><br><br>
+          From: ${from}<br>
+          To: ${to}<br>
+          Date: ${date}<br><br>
+          🔹 Train #101 — 7:00 AM<br>
+          🔹 Train #204 — 11:30 AM<br>
+          🔹 Train #318 — 4:45 PM<br>
+        `;
+      }, 1000);
+    }
+  </script>
 
-        function attachAutocomplete(inputId){
-            const input = document.getElementById(inputId);
-            if(!input) return;
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'relative';
-            // ensure wrapper matches input width
-            const parent = input.parentNode;
-            parent.replaceChild(wrapper, input);
-            wrapper.appendChild(input);
-
-            const list = document.createElement('div');
-            list.style.position = 'absolute';
-            list.style.top = '100%';
-            list.style.left = '0';
-            list.style.right = '0';
-            list.style.background = '#fff';
-            list.style.border = '1px solid #ccc';
-            list.style.borderTop = 'none';
-            list.style.zIndex = '9999';
-            list.style.display = 'none';
-            list.style.maxHeight = '160px';
-            list.style.overflowY = 'auto';
-            wrapper.appendChild(list);
-
-            let debounceTimer;
-            input.addEventListener('input', () => {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(async () => {
-                    const q = input.value.trim();
-                    const country = document.getElementById('country').value;
-                    if(q.length < 2){ list.style.display='none'; return; }
-                    const stations = await fetchStations(country, q);
-                    list.innerHTML = stations.map(s=>`<div class="auto-item" style="padding:8px;cursor:pointer;border-bottom:1px solid #eee">${escapeHtml(s.name)} ${s.code?`(${escapeHtml(s.code)})`:''}</div>`).join('');
-                    list.style.display = stations.length ? 'block' : 'none';
-                    [...list.children].forEach((el, i)=>{
-                        el.addEventListener('click', () => {
-                            input.value = el.innerText;
-                            list.style.display='none';
-                        });
-                    });
-                }, 300);
-            });
-
-            document.addEventListener('click', e => {
-                if(!wrapper.contains(e.target)){ list.style.display='none'; }
-            });
-        }
-
-        window.addEventListener('load', () => {
-            attachAutocomplete('from');
-            attachAutocomplete('to');
-
-            // attach swap button handler
-            const swapBtn = document.getElementById('swapBtn');
-            if(swapBtn){
-                swapBtn.addEventListener('click', () => {
-                    const fromInput = document.getElementById('from');
-                    const toInput = document.getElementById('to');
-                    const tmp = fromInput.value;
-                    fromInput.value = toInput.value;
-                    toInput.value = tmp;
-                    // focus the from input after swap
-                    fromInput.focus();
-                });
-            }
-        });
-
-        // Auto-detect country using browser locale (best-effort)
-        window.addEventListener('load', () => {
-            const countrySelect = document.getElementById('country');
-            try{
-                const userLocale = Intl.DateTimeFormat().resolvedOptions().locale || '';
-                const localeCountry = (userLocale.split('-')[1] || '').toLowerCase();
-                if(localeCountry){
-                    for (let opt of countrySelect.options) {
-                        if (opt.value.toLowerCase().includes(localeCountry)) {
-                            countrySelect.value = opt.value;
-                            break;
-                        }
-                    }
-                }
-            }catch(e){/* ignore */}
-        });
-
-        document.getElementById('searchBtn').addEventListener('click', searchTrains);
-
-        async function searchTrains(){
-            const country = document.getElementById('country').value;
-            const from = document.getElementById('from').value.trim();
-            const to = document.getElementById('to').value.trim();
-            const date = document.getElementById('datepicker').value;
-            const indiaApiKey = document.getElementById('indiaApiKey').value.trim();
-            const results = document.getElementById('results');
-
-            if(!country || !from || !to || !date){
-                results.style.display='block';
-                results.innerHTML = '<strong>Please fill all fields: country, from, to, and date.</strong>';
-                return;
-            }
-
-            results.style.display='block';
-            results.innerHTML = '<div style="display:flex;align-items:center;gap:12px"><span class="train-icon">🚆</span><div>Loading results…</div></div>';
-
-            // Call your FastAPI backend which dispatches to the right provider
-            try{
-                const resp = await fetch('http://localhost:8000/api/train/search', {
-                    method: 'POST',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify({
-                        country: country,
-                        from_station: from,
-                        to_station: to,
-                        date: date,
-                        extras: { indiaApiKey: indiaApiKey }
-                    })
-                });
-
-                if(!resp.ok){
-                    const text = await resp.text();
-                    results.innerHTML = `<h3>Error</h3><pre style="white-space:pre-wrap">${text}</pre>`;
-                    return;
-                }
-
-                const data = await resp.json();
-                // Backend returns { provider, provider_status, trains: [{train, depart, arrive, duration, raw}] }
-                if(!data || !Array.isArray(data.trains)){
-                    results.innerHTML = '<h3>No data returned.</h3>';
-                    return;
-                }
-
-                if(data.trains.length === 0){
-                    results.innerHTML = `<h3>No trains found</h3><p>Provider: ${data.provider} (${data.provider_status})</p>`;
-                    return;
-                }
-
-                const rows = data.trains.map(t => `
-                    <tr>
-                        <td>${escapeHtml(t.train||t.name||t.number||'—')}</td>
-                        <td>${escapeHtml(t.depart||t.depart_time||'—')}</td>
-                        <td>${escapeHtml(t.arrive||t.arrival||t.arrival_time||'—')}</td>
-                        <td>${escapeHtml(t.duration||'—')}</td>
-                    </tr>`).join('');
-
-                results.innerHTML = `
-                    <h3>Results — ${escapeHtml(data.provider)} (${escapeHtml(data.provider_status)})</h3>
-                    <p>Route: <strong>${escapeHtml(from)}</strong> → <strong>${escapeHtml(to)}</strong> • Date: <strong>${escapeHtml(date)}</strong></p>
-                    <table>
-                        <tr><th>Train</th><th>Depart</th><th>Arrive</th><th>Duration</th></tr>
-                        ${rows}
-                    </table>`;
-
-            }catch(err){
-                results.innerHTML = `<h3>Network Error</h3><p>${err.message}</p>`;
-            }
-        }
-
-        function escapeHtml(str){
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-        }
-    </script>
 </body>
 </html>
-
-<!-- vercel.json for auto‑deploy on Vercel -->
-<!-- Place this file as `vercel.json` in your project root when exporting -->
-<script type="application/json" id="vercel-config">
-{
-  "version": 3,
-  "framework": null,
-  "buildCommand": "",
-  "devCommand": "",
-  "routes": [
-    { "src": "/api/(.*)", "dest": "http://localhost:8000/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ]
-}
-</script>
