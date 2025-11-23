@@ -1,0 +1,8 @@
+# requirements.txt for Train Timetable Backend (FastAPI)
+
+fastapi
+uvicorn
+httpx
+pydantic
+python-dotenv
+requests
