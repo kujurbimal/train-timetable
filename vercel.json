@@ -1,7 +1,15 @@
 {
-  "version": 3,
+  "version": 2,
   "routes": [
-    { "src": "/update-available", "dest": "/update-available.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/update-available",
+      "dest": "/update-available.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
+
+
