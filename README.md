@@ -1,15 +1,22 @@
-# 🌍 Train Timetable – Global Train Schedule Viewer
+# 🌍 Global Train Timetable API
 
-A simple, clean, Vercel-hosted web app to view train timetables for any country.
 
-## Features
-- Country selection (India, USA, UK, Japan, Europe, etc.)
-- Date picker
-- From/To station search
-- Clean UI
-- Fully responsive
-- Works on Vercel static hosting
-- `/update-available` system message page
+A simple, clean, FastAPI-powered backend for displaying worldwide train timetable information.
 
-## Deployment
-Just push to GitHub → connect repo to Vercel → auto-deploy.
+
+## 🚀 Features
+- Multi‑country station support (India, USA, Japan, Europe)
+- Real API provider support plug‑in system
+- Vercel auto-deployment
+- Lightweight & fast
+- Simple Docker build
+
+
+---
+
+
+## 📦 Installation
+```bash
+git clone https://github.com/your/repo.git
+cd repo
+pip install -r requirements.txt
