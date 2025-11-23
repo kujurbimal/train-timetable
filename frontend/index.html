@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>World Train Timetable</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app">
+<header>
+<h1>World Train Timetable</h1>
+<p class="muted">Search timetables across India, Europe, USA, Japan, UK & Australia</p>
+</header>
+
+
+<section class="card">
+<label>Country</label>
+<select id="country"></select>
+
+
+<div class="from-to">
+<div class="col">
+<label>From</label>
+<input id="from" placeholder="Station name or code" autocomplete="off">
+</div>
+
+
+<button id="swapBtn" class="swap" title="Swap">↕</button>
+
+
+<div class="col">
+<label>To</label>
+<input id="to" placeholder="Station name or code" autocomplete="off">
+</div>
+</div>
+
+
+<label>Date</label>
+<input id="date" type="date">
+
+
+<div class="row">
+<input id="indiaKey" placeholder="India API key (optional)" />
+<button id="searchBtn">Search</button>
+</div>
+
+
+<div id="result" class="result"></div>
+</section>
+
+
+<footer class="muted small">Demo mode: no API keys = demo results. Add provider keys in backend to enable live data.</footer>
+</main>
+
+
+<script src="script.js"></script>
+</body>
+</html>
