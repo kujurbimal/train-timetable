@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "routes": [
+    { "src": "/update-available", "dest": "/update-available.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
