@@ -1,0 +1,18 @@
+:root{--bg:#f4f7fa;--card:#fff;--accent:#1a73e8}
+*{box-sizing:border-box}
+body{font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);margin:0;color:#111}
+.app{max-width:920px;margin:32px auto;padding:16px}
+header{text-align:center;margin-bottom:12px}
+.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 24px rgba(16,24,40,0.06)}
+label{display:block;margin-top:10px;font-weight:600}
+select,input,button{width:100%;padding:10px;border-radius:8px;border:1px solid #d7dbe0;font-size:15px}
+.from-to{display:flex;gap:10px;margin-top:8px}
+.from-to .col{flex:1}
+.swap{width:48px;flex:0;align-self:center;background:#fff;border:1px solid #d7dbe0;border-radius:8px;cursor:pointer}
+.row{display:flex;gap:8px;margin-top:12px}
+.row input{flex:1}
+.row button{flex:0 0 140px;background:var(--accent);color:#fff;border:none}
+.result{margin-top:14px;padding:12px;background:#eef4ff;border-radius:8px;display:none}
+.muted{color:#616269}
+.small{font-size:13px}
+@media(max-width:720px){.from-to{flex-direction:column}.row{flex-direction:column}.row button{width:100%}}
